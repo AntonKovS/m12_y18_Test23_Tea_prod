@@ -1,23 +1,23 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {ProductsType} from "../../../types/products.type";
-import {tap} from "rxjs";
+// import {tap} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductsService {
   // public products: ProductsType[] = [];
-  public loading: boolean = false;
+  // public loading: boolean = false;
 
   constructor(private http: HttpClient) {}
 
   getProducts() {
-    this.loading = true;
+    // this.loading = true;
     return this.http.get<ProductsType[]>('https://testologia.ru/tea')
-      .pipe(tap(() => {
-        this.loading = false;
-      }))
+      // .pipe(tap(() => {
+      //   this.loading = false;
+      // }))
       // .subscribe({
       //   next: (data) => {
       //     this.products = data;
