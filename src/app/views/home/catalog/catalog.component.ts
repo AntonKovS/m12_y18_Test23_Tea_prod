@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ProductsType} from "../../../../types/products.type";
 import {ProductsService} from "../../../shared/services/products.service";
+import {tap} from "rxjs";
 
 @Component({
   selector: 'app-catalog',
@@ -9,12 +10,17 @@ import {ProductsService} from "../../../shared/services/products.service";
 })
 export class CatalogComponent implements OnInit {
   public products: ProductsType[] = [];
+  public loading: boolean = false;
+
   constructor(public productsService: ProductsService) { }
 
   ngOnInit() {
    // this.productsService.getProducts();
-
+    this.loading = true;
     this.productsService.getProducts()
+      .pipe(tap(() => {
+        this.loading = false;
+      }))
       .subscribe(result => {
         this.products = result;
       });

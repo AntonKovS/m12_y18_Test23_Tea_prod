@@ -8,16 +8,14 @@ import {tap} from "rxjs";
 })
 export class ProductsService {
   // public products: ProductsType[] = [];
-  public loading: boolean = false;
+  // public loading: boolean = false;
 
   constructor(private http: HttpClient) {}
 
   getProducts() {
-    this.loading = true;
+    // this.loading = true;
     return this.http.get<ProductsType[]>('https://testologia.ru/tea')
-      .pipe(tap(() => {
-        this.loading = false;
-      }))
+
       // .subscribe({
       //   next: (data) => {
       //     this.products = data;
