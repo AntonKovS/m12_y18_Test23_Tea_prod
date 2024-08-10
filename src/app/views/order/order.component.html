@@ -1,0 +1,91 @@
+<div *ngIf="!successfulOrder">
+  <h2 id="h2-hide" class="h2-hide text-center my-5 fw-weight-bolder">Сделать заказ</h2>
+  <form id="form-hidden" class="form-hidden row g-3 col-lg-6 mx-auto pt-2 my-5"
+        [formGroup]="signInForm" (ngSubmit)="signIn()">
+    <div class="col-md-12">
+      <label for="inputProduct" class="form-label">Товар</label>
+      <input type="text" class="form-control" id="inputProduct" formControlName="product" readonly>
+    </div>
+    <div class="col-md-6">
+      <label for="inputFirstName" class="form-label" [class]="{'text-danger': name?.invalid && (name?.dirty || name?.touched)}">Имя</label>
+      <input type="text" class="form-control" id="inputFirstName" formControlName="name"
+             [class]="{'border-danger': name?.invalid && (name?.dirty || name?.touched)}">
+      <div *ngIf="name?.invalid && (name?.dirty || name?.touched)">
+        <div class="text-danger" *ngIf="name?.errors?.['required']">Укажите имя</div>
+      </div>
+      <div *ngIf="name?.invalid && (name?.dirty || name?.touched)">
+        <div class="text-danger" *ngIf="name?.errors?.['pattern']">Допустимы только буквы</div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <label for="inputSurname" class="form-label" [class]="{'text-danger': last_name?.invalid && (last_name?.dirty || last_name?.touched)}">Фамилия</label>
+      <input type="text" class="form-control" id="inputSurname" formControlName="last_name"
+             [class]="{'border-danger': last_name?.invalid && (last_name?.dirty || last_name?.touched)}">
+      <div *ngIf="last_name?.invalid && (last_name?.dirty || last_name?.touched)">
+        <div class="text-danger" *ngIf="last_name?.errors?.['required']">Укажите фамилию</div>
+      </div>
+      <div *ngIf="last_name?.invalid && (last_name?.dirty || last_name?.touched)">
+        <div class="text-danger" *ngIf="last_name?.errors?.['pattern']">Допустимы только буквы</div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <label for="phoneNumber" class="form-label" [class]="{'text-danger': phone?.invalid && (phone?.dirty || phone?.touched)}">Телефон</label>
+      <input type="tel" class="form-control" id="phoneNumber" formControlName="phone"
+             [class]="{'border-danger': phone?.invalid && (phone?.dirty || phone?.touched)}">
+      <div *ngIf="name?.invalid && (phone?.dirty || phone?.touched)">
+        <div class="text-danger" *ngIf="phone?.errors?.['required']">Укажите номер телефона</div>
+      </div>
+      <div *ngIf="phone?.invalid && (phone?.dirty || phone?.touched)">
+        <div class="text-danger" *ngIf="phone?.errors?.['pattern']">Допустим ввод 11 цифр и возможен + в начале</div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <label for="inputCountry" class="form-label" [class]="{'text-danger': signInForm.get('country')?.invalid && (signInForm.get('country')?.dirty || signInForm.get('country')?.touched)}">Страна</label>
+      <input type="text" class="form-control" id="inputCountry" formControlName="country"
+             [class]="{'border-danger': signInForm.get('country')?.invalid && (signInForm.get('country')?.dirty || signInForm.get('country')?.touched)}">
+      <div *ngIf="signInForm.get('country')?.invalid && (signInForm.get('country')?.dirty || signInForm.get('country')?.touched)">
+        <div class="text-danger" *ngIf="signInForm.get('country')?.errors?.['required']">Укажите страну</div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <label for="inputZip" class="form-label" [class]="{'text-danger': zip?.invalid && (zip?.dirty || zip?.touched)}">Индекс</label>
+      <input type="text" class="form-control" id="inputZip" formControlName="zip"
+             [class]="{'border-danger': zip?.invalid && (zip?.dirty || zip?.touched)}">
+      <div *ngIf="zip?.invalid && (zip?.dirty || zip?.touched)">
+        <div class="text-danger" *ngIf="zip?.errors?.['required']">Укажите индекс</div>
+      </div>
+      <div *ngIf="zip?.invalid && (zip?.dirty || zip?.touched)">
+        <div class="text-danger" *ngIf="zip?.errors?.['pattern']">Минимум 6 цифр</div>
+      </div>
+    </div>
+    <div class="col-12">
+      <label for="inputAddress" class="form-label" [class]="{'text-danger': address?.invalid && (address?.dirty || address?.touched)}">Адрес</label>
+      <input type="text" class="form-control" id="inputAddress" formControlName="address"
+             [class]="{'border-danger': address?.invalid && (address?.dirty || address?.touched)}">
+      <div *ngIf="address?.invalid && (address?.dirty || address?.touched)">
+        <div class="text-danger" *ngIf="address?.errors?.['required']">Укажите адрес</div>
+      </div>
+      <div *ngIf="address?.invalid && (address?.dirty || address?.touched)">
+        <div class="text-danger" *ngIf="address?.errors?.['pattern']">Допустим ввод только букв, цифр, пробела, дефиса и слеша</div>
+      </div>
+    </div>
+    <div class="col-12">
+      <label for="inputComment" class="form-label">Комментарий к заказу</label>
+      <textarea class="form-control" id="inputComment" formControlName="comment"></textarea>
+    </div>
+    <div class="col-12 mt-4 text-center">
+      <button id="btnForm" class="btn btn-primary px-5"
+              [disabled]="signInForm.invalid || signInForm.disabled">Отправить</button>
+<!--              [attr.disabled]="buttonDisabled ? '' : null" (click)="signIn()">Отправить</button>-->
+    </div>
+    <div *ngIf="errorButton" class="text-center">
+      <div class="text-danger">Произошла ошибка. Попробуйте еще раз.</div>
+    </div>
+  </form>
+</div>
+
+<div
+     class="successful-order alert-success bg-light col-lg-6 mx-auto m-5 py-4 text-center"
+     *ngIf="successfulOrder">
+  <h4 class="alert-heading my-5 py-5">Спасибо за заказ!</h4>
+</div>
